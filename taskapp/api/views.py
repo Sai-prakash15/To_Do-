@@ -172,18 +172,42 @@ class ToDoDetailAPIView(mixins.DestroyModelMixin, mixins.UpdateModelMixin, gener
 
 from .serializers import ListItemSerializer
 from taskapp.models import ListItem
+from django.utils import timezone
+import datetime
 class ListAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_fields = ('item_name', 'priority', 'modified_timestamp', 'created_timestamp')
     search_fields = ('item_name', 'priority')
     ordering_fields = ('priority', 'modified_timestamp', 'created_timestamp')
-    
+
     serializer_class = ListItemSerializer
-    queryset = ListItem.objects.all()
-    # def get(self, request):
+    # queryset = ListItem.objects.all()
+    def get_queryset(self):
+        start_c = self.request.GET.get('start_c', None)
+        end_c = self.request.GET.get('end_c', timezone.now())
+
+        start_m = self.request.GET.get('start_m', None)
+        end_m = self.request.GET.get('end_m', timezone.now())
+        # print(start_c, end_c)
+        # start = "2021-04-06T00:00:00"
+        # # end = "2021-04-08T23:59:59"
+        # end = timezone.now()
+        # print(ListItem.objects.all())
+        items_c = ListItem.objects.filter(created_timestamp__range = (start_c, end_c))
+        items_m = ListItem.objects.filter(modified_timestamp__range = (start_m, end_m))
+        print("items",items_c, items_m)
+        if(len(items_c) == 0 and len(items_m) == 0):
+            return ListItem.objects.all()
+        return items_c or items_m
+    # def get(self, request, *args, **kwargs):
+    #     super().get(request, *args, **kwargs)
     #     start = request.GET.get('start', None)
     #     end = request.GET.get('end', None)
-    #     return Response(ListItem.objects.filter(created_timestamp__range=(start, end)))
+    #     print(start, end)
+    #     print(ListItem.objects.all())
+    #     # print(ListItem.objects.filter(created_timestamp__range=(start, end)))
+    #     # return Response(ListItem.objects.all().filter(created_timestamp__range=(start, end)))
+    #     return Response(ListItem.objects.all().filter(item_name=start))
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
