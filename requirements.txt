@@ -1,0 +1,12 @@
+asgiref @ file:///tmp/build/80754af9/asgiref_1605055780383/work
+certifi==2020.12.5
+Django @ file:///tmp/build/80754af9/django_1613762073373/work
+django-filter==2.4.0
+djangorestframework==3.12.2
+Faker==6.6.2
+psycopg2 @ file:///opt/concourse/worker/volumes/live/7541fe58-2a45-4073-5d69-313e733fc729/volume/psycopg2_1612298592535/work
+python-dateutil==2.8.1
+pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
+six==1.15.0
+sqlparse @ file:///tmp/build/80754af9/sqlparse_1602184451250/work
+text-unidecode==1.3
