@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 # from django.views.generic import View
-from accounts.api.permissions import IsOwnerOrReadOnly
+from accounts.api.permissions import IsOwnerOrReadOnly, IsOwnerOrReject
 from taskapp.models import ToDoList
 from .serializers import ToDoListSerializer
 from django.shortcuts import get_object_or_404
@@ -43,7 +43,7 @@ class ToDoListSearchAPIView(APIView):
 class ToDoAPIView(
     mixins.CreateModelMixin,
     generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
     serializer_class = ToDoListSerializer
     # filter_fields = {'priority':['startswith']}
     filter_fields = ('name', 'priority', 'modified_timestamp', 'created_timestamp')
@@ -137,7 +137,7 @@ class ToDoAPIView(
 #     serializer.save(user=self.request.user)
 
 class ToDoDetailAPIView(mixins.DestroyModelMixin, mixins.UpdateModelMixin, generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReject]
 
     queryset = ToDoList.objects.all()
     serializer_class = ToDoListSerializer

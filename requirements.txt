@@ -2,6 +2,7 @@ asgiref @ file:///tmp/build/80754af9/asgiref_1605055780383/work
 certifi==2020.12.5
 chardet==4.0.0
 Django @ file:///tmp/build/80754af9/django_1613762073373/work
+django-extensions==3.1.2
 django-filter==2.4.0
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.6.0
