@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from taskapp.views import  redirect_view
 from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$', redirect_view),
     path('api/taskapp/', include('taskapp.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/user/', include('accounts.api.user.urls')),

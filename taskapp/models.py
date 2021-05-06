@@ -13,7 +13,7 @@ class ToDoListManager(models.Manager):
 
 class ToDoList(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.TextField(help_text='Enter field documentation',blank=True,null=True)
+    name = models.TextField(help_text='Enter field documentation',blank=True,unique=True)
     modified_timestamp = models.DateTimeField(auto_now=True)
     created_timestamp = models.DateTimeField(auto_now_add=True)
     priority = models.IntegerField()
@@ -38,7 +38,7 @@ class ListItem(models.Model):
         ('3', 'Important'),
         ('4', 'Critical'),
     )
-    to_do_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE,db_column='name')
+    to_do_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
     item_name = models.TextField(help_text='Enter field documentation',blank=True,null=True)
     modified_timestamp = models.DateTimeField(auto_now=True)
     created_timestamp = models.DateTimeField(auto_now_add=True)
